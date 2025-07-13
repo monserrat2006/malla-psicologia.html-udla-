@@ -1,4 +1,4 @@
-:root {
+''':root {
   --fondo-pagina: #fdf9ff;
   --color-principal: #6a0dad;
   --color-secundario: #f3e9ff;
@@ -94,3 +94,4 @@ h1 {
   color: var(--borde-bloqueado);
   cursor: not-allowed;
 }
+'''
