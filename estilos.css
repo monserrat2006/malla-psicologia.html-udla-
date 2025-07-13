@@ -1,0 +1,66 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #fdf9ff;
+  padding: 30px;
+}
+h1 {
+  text-align: center;
+  color: #6a0dad;
+}
+h2 {
+  text-align: center;
+  color: #4b007d;
+}
+.contenedor-malla {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  gap: 30px;
+  padding-bottom: 30px;
+}
+.semestre {
+  min-width: 250px;
+  background: #f3e9ff;
+  border: 2px solid #cda4f3;
+  padding: 10px;
+  border-radius: 10px;
+}
+.titulo-semestre {
+  font-weight: bold;
+  color: #4b007d;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.ramo {
+  background: white;
+  border: 2px solid #ccc;
+  border-left: 10px solid #d4a6ff;
+  border-radius: 6px;
+  padding: 8px;
+  margin: 5px 0;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.ramo:hover {
+  background: #f0e5ff;
+}
+.aprobado {
+  background: #ffd6ec !important;
+  text-decoration: line-through;
+  border-color: #ff69b4;
+}
+.bloqueado {
+  background: #f8f9fa;
+  border: 2px dashed #aaa;
+  color: #aaa;
+  cursor: not-allowed;
+}
+button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: #e0b3ff;
+  border: none;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+}
