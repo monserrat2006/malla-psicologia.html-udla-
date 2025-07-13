@@ -1,3 +1,7 @@
+// Import jsPDF from CDN (en index.html)
+// Puedes usar jspdf.umd.js con:
+// const { jsPDF } = window.jspdf;
+
 const malla = [
   { nombre: "Semestre 1", ramos: [
     { id: "intro_datos", nombre: "Introducción al Análisis de Datos" },
@@ -72,8 +76,10 @@ const malla = [
   ]}
 ];
 
+// Manejo de ramos aprobados en localStorage
 const aprobados = new Set(JSON.parse(localStorage.getItem("ramosAprobados")) || []);
 
+// Crear la malla en el DOM
 function crearMalla() {
   const contenedor = document.getElementById("malla-container");
   contenedor.innerHTML = "";
@@ -88,22 +94,22 @@ function crearMalla() {
     div.appendChild(titulo);
 
     semestre.ramos.forEach(ramo => {
-      const boton = document.createElement("div");
-      boton.className = "ramo";
-      boton.textContent = ramo.nombre;
+      const ramoDiv = document.createElement("div");
+      ramoDiv.className = "ramo";
+      ramoDiv.textContent = ramo.nombre;
 
       if (aprobados.has(ramo.id)) {
-        boton.classList.add("aprobado");
+        ramoDiv.classList.add("aprobado");
       } else if (ramo.desbloqueadoSi) {
         const requisitosCumplidos = ramo.desbloqueadoSi.every(id => aprobados.has(id));
         if (!requisitosCumplidos) {
-          boton.classList.add("bloqueado");
+          ramoDiv.classList.add("bloqueado");
         }
       }
 
-      boton.onclick = () => {
-        if (boton.classList.contains("bloqueado")) return;
-        if (boton.classList.contains("aprobado")) {
+      ramoDiv.onclick = () => {
+        if (ramoDiv.classList.contains("bloqueado")) return;
+        if (ramoDiv.classList.contains("aprobado")) {
           aprobados.delete(ramo.id);
         } else {
           aprobados.add(ramo.id);
@@ -112,66 +118,36 @@ function crearMalla() {
         crearMalla();
       };
 
-      div.appendChild(boton);
+      div.appendChild(ramoDiv);
     });
 
     contenedor.appendChild(div);
   });
-
-  const totalRamos = malla.flatMap(s => s.ramos).length;
-  const porcentaje = Math.round((aprobados.size / totalRamos) * 100);
-  document.getElementById("avance").textContent = `Avance: ${porcentaje}% (${aprobados.size} de ${totalRamos})`;
 }
 
-function reiniciar() {
-  if (confirm("¿Estás seguro de que quieres reiniciar tu progreso?")) {
-    localStorage.removeItem("ramosAprobados");
-    aprobados.clear();
-    crearMalla();
-  }
-}
+// Cambiar colores con CSS variables
+function aplicarColoresDesdeFormulario(event) {
+  event.preventDefault();
+  const form = event.target;
 
-crearMalla();
-// Función para aclarar un color (retorna color más claro)
-function lightenColor(color, luminosity) {
-  color = color.replace(/[^0-9a-f]/gi, '');
-  if(color.length < 6) {
-    color = color[0]+color[0]+color[1]+color[1]+color[2]+color[2];
-  }
-  let rgb = "#", c, i;
-  for(i=0; i<3; i++) {
-    c = parseInt(color.substr(i*2,2),16);
-    c = Math.min(255, Math.floor(c + (255 - c) * luminosity));
-    rgb += ("00"+c.toString(16)).substr(-2);
-  }
-  return rgb;
-}
+  const colorFondo = form["color-fondo"].value;
+  const colorTexto = form["color-texto"].value;
+  const colorRamos = form["color-ramos"].value;
+  const colorAprobado = form["color-aprobado"].value;
+  const colorBloqueado = form["color-bloqueado"].value;
 
-// Función para aplicar los colores guardados o por defecto
-function aplicarColores() {
-  const colorFondo = localStorage.getItem('colorFondo') || '#fdf9ff';
-  const colorPrincipal = localStorage.getItem('colorPrincipal') || '#6a0dad';
+  document.documentElement.style.setProperty('--color-fondo', colorFondo);
+  document.documentElement.style.setProperty('--color-texto', colorTexto);
+  document.documentElement.style.setProperty('--color-ramos', colorRamos);
+  document.documentElement.style.setProperty('--color-aprobado', colorAprobado);
+  document.documentElement.style.setProperty('--color-bloqueado', colorBloqueado);
 
-  document.body.style.background = colorFondo;
-  document.querySelector('h1').style.color = colorPrincipal;
-  document.querySelector('h2').style.color = colorPrincipal;
-  document.querySelectorAll('.titulo-semestre').forEach(el => el.style.color = colorPrincipal);
-  document.querySelectorAll('.semestre').forEach(el => {
-    el.style.borderColor = colorPrincipal;
-    el.style.background = lightenColor(colorPrincipal, 0.9);
-  });
-}
+  // Opcionales (bordes y texto bloqueado)
+  // Ajustar bordes para mantener contraste visual
+  const bordeRamos = shadeColor(colorRamos, -15);
+  const bordeAprobado = shadeColor(colorAprobado, -25);
+  const bordeBloqueado = shadeColor(colorBloqueado, -35);
+  const textoBloqueado = shadeColor(colorBloqueado, 60);
 
-// Al cargar la página, aplicar colores guardados
-aplicarColores();
-
-// Detectar cambios en los selectores de color y guardar
-document.getElementById('color-fondo').addEventListener('input', e => {
-  localStorage.setItem('colorFondo', e.target.value);
-  aplicarColores();
-});
-document.getElementById('color-principal').addEventListener('input', e => {
-  localStorage.setItem('colorPrincipal', e.target.value);
-  aplicarColores();
-});
-
+  document.documentElement.style.setProperty('--color-borde-ramos', bordeRamos);
+  document.documentElement.style.setProperty('--color-borde-aprobado', bordeA
