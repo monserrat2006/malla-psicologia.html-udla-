@@ -1,36 +1,115 @@
+:root {
+  --color-fondo: #fdf9ff;
+  --color-texto: #4b007d;
+  --color-ramos: #f3e9ff;
+  --color-borde-ramos: #cda4f3;
+  --color-ramo-hover: #f0e5ff;
+  --color-aprobado: #ffd6ec;
+  --color-borde-aprobado: #ff69b4;
+  --color-bloqueado: #f8f9fa;
+  --color-borde-bloqueado: #aaa;
+  --color-texto-bloqueado: #aaa;
+  --color-titulo: #6a0dad;
+}
+
 body {
   font-family: Arial, sans-serif;
-  background: #fdf9ff;
+  background: var(--color-fondo);
+  color: var(--color-texto);
   padding: 30px;
+  margin: 0;
 }
-h1 {
+
+h1, h2 {
   text-align: center;
-  color: #6a0dad;
+  color: var(--color-titulo);
+  margin-bottom: 15px;
 }
-h2 {
-  text-align: center;
-  color: #4b007d;
+
+#info-carrera {
+  max-width: 800px;
+  margin: 0 auto 30px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(106,13,173,0.1);
+  line-height: 1.5;
+  color: var(--color-texto);
 }
+
+#info-carrera strong {
+  color: var(--color-titulo);
+}
+
+#personalizacion-colores {
+  max-width: 800px;
+  margin: 0 auto 30px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(106,13,173,0.1);
+  padding: 15px;
+}
+
+#form-colores {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  align-items: center;
+}
+
+#form-colores label {
+  min-width: 130px;
+  font-weight: 600;
+}
+
+#form-colores input[type=color] {
+  width: 50px;
+  height: 30px;
+  border: none;
+  cursor: pointer;
+  background: none;
+}
+
+#form-colores button {
+  background-color: var(--color-titulo);
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#form-colores button:hover {
+  background-color: #53008a;
+}
+
 .contenedor-malla {
   display: flex;
   flex-direction: row;
   overflow-x: auto;
   gap: 30px;
   padding-bottom: 30px;
+  max-width: 100%;
 }
+
 .semestre {
   min-width: 250px;
-  background: #f3e9ff;
-  border: 2px solid #cda4f3;
+  background: var(--color-ramos);
+  border: 2px solid var(--color-borde-ramos);
   padding: 10px;
   border-radius: 10px;
 }
+
 .titulo-semestre {
   font-weight: bold;
-  color: #4b007d;
+  color: var(--color-texto);
   margin-bottom: 10px;
   text-align: center;
 }
+
 .ramo {
   background: white;
   border: 2px solid #ccc;
@@ -39,28 +118,65 @@ h2 {
   padding: 8px;
   margin: 5px 0;
   cursor: pointer;
-  transition: 0.3s;
+  transition: background-color 0.3s ease;
 }
+
 .ramo:hover {
-  background: #f0e5ff;
+  background: var(--color-ramo-hover);
 }
+
 .aprobado {
-  background: #ffd6ec !important;
+  background: var(--color-aprobado) !important;
   text-decoration: line-through;
-  border-color: #ff69b4;
+  border-color: var(--color-borde-aprobado);
 }
+
 .bloqueado {
-  background: #f8f9fa;
-  border: 2px dashed #aaa;
-  color: #aaa;
+  background: var(--color-bloqueado);
+  border: 2px dashed var(--color-borde-bloqueado);
+  color: var(--color-texto-bloqueado);
   cursor: not-allowed;
 }
-button {
-  padding: 10px 20px;
-  border-radius: 10px;
-  background: #e0b3ff;
+
+#descarga {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#descargar-pdf {
+  background-color: var(--color-titulo);
   border: none;
+  padding: 12px 28px;
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
   cursor: pointer;
-  display: block;
-  margin: 0 auto;
+  transition: background-color 0.3s ease;
+}
+
+#descargar-pdf:hover {
+  background-color: #53008a;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .contenedor-malla {
+    flex-direction: column;
+    max-height: 600px;
+    overflow-y: auto;
+  }
+
+  .semestre {
+    min-width: 100%;
+  }
+
+  #form-colores {
+    flex-direction: column;
+  }
+
+  #form-colores label, #form-colores input, #form-colores button {
+    width: 100%;
+    max-width: 300px;
+    margin: 5px auto;
+  }
 }
