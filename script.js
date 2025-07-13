@@ -6,14 +6,6 @@ const malla = [
     { id: "habilidades1", nombre: "Habilidades Profesionales I" },
     { id: "fund_sociales", nombre: "Fundamentos Sociales de la Psicología" },
     { id: "fund_epist", nombre: "Fundamentos Epistemológicos de las Ciencias Sociales" }
-  ]},
-  { nombre: "Semestre 2", ramos: [
-    { id: "fund_cient", nombre: "Fundamentos Científicos de la Psicología" },
-    { id: "teorias_sociales", nombre: "Teorías Sociales" },
-    { id: "epistemologia", nombre: "Epistemología para Psicología" },
-    { id: "neurofisiologia", nombre: "Neurofisiología" },
-    { id: "procesos", nombre: "Procesos Psicológicos" },
-    { id: "seminario1", nombre: "Seminario ADAI I" }
   ]}
 ];
 
@@ -65,23 +57,5 @@ document.getElementById("form-colores").onsubmit = (e) => {
   document.documentElement.style.setProperty("--ramos", document.getElementById("color-ramos").value);
 };
 
-document.getElementById("descargar-pdf").onclick = () => {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  doc.text("Malla Psicología UDLA", 10, 10);
-  let y = 20;
-
-  malla.forEach(semestre => {
-    doc.text(semestre.nombre, 10, y);
-    y += 6;
-    semestre.ramos.forEach(ramo => {
-      doc.text("- " + ramo.nombre, 15, y);
-      y += 6;
-    });
-    y += 4;
-  });
-
-  doc.save("malla-psicologia-udla.pdf");
-};
-
 crearMalla();
+
