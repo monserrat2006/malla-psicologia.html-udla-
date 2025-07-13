@@ -1,97 +1,86 @@
-''':root {
-  --fondo-pagina: #fdf9ff;
-  --color-principal: #6a0dad;
-  --color-secundario: #f3e9ff;
-  --borde-ramos: #cda4f3;
-  --texto-semestre: #4b007d;
-  --fondo-ramo: #ffffff;
-  --borde-ramo-lateral: #d4a6ff;
-  --hover-ramo: #f0e5ff;
-  --fondo-aprobado: #ffd6ec;
-  --borde-aprobado: #ff69b4;
-  --fondo-bloqueado: #f8f9fa;
-  --borde-bloqueado: #aaa;
-}
-
 body {
   font-family: Arial, sans-serif;
-  background: var(--fondo-pagina);
+  background: #fdf9ff;
   padding: 20px;
   margin: 0;
 }
-
 h1 {
   text-align: center;
-  color: var(--color-principal);
+  color: #6a0dad;
 }
-
-.info-carrera {
-  background: #ffffff;
-  border-left: 6px solid var(--color-principal);
-  padding: 15px;
-  margin-bottom: 30px;
-  border-radius: 10px;
-  max-width: 800px;
-  margin-inline: auto;
+.color-config {
+  max-width: 900px;
+  margin: 0 auto 30px auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
 }
-
+.color-config div {
+  min-width: 150px;
+}
 .contenedor-malla {
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
   gap: 30px;
-  padding-bottom: 30px;
-  scroll-behavior: smooth;
+  padding-bottom: 20px;
 }
-
-@media (max-width: 768px) {
-  .contenedor-malla {
-    flex-direction: column;
-    overflow-x: unset;
-  }
-}
-
+/* Cada semestre es columna fija mínima */
 .semestre {
   min-width: 250px;
-  background: var(--color-secundario);
-  border: 2px solid var(--borde-ramos);
+  background: #f3e9ff;
+  border: 2px solid #cda4f3;
   padding: 10px;
   border-radius: 10px;
-  flex-shrink: 0;
+  flex-shrink: 0; /* para que no reduzca ancho */
 }
-
 .titulo-semestre {
   font-weight: bold;
-  color: var(--texto-semestre);
+  color: #4b007d;
   margin-bottom: 10px;
   text-align: center;
 }
-
 .ramo {
-  background: var(--fondo-ramo);
+  background: white;
   border: 2px solid #ccc;
-  border-left: 10px solid var(--borde-ramo-lateral);
+  border-left: 10px solid #d4a6ff;
   border-radius: 6px;
   padding: 8px;
   margin: 5px 0;
   cursor: pointer;
-  transition: 0.3s;
+  transition: background-color 0.3s, color 0.3s;
 }
-
 .ramo:hover {
-  background: var(--hover-ramo);
+  background: #f0e5ff;
 }
-
+/* Clases con colores variables */
 .aprobado {
-  background: var(--fondo-aprobado) !important;
+  background: var(--aprobado-bg, #ffd6ec);
+  color: var(--aprobado-color, #000);
   text-decoration: line-through;
-  border-color: var(--borde-aprobado);
+  border-color: var(--aprobado-border, #ff69b4);
 }
-
 .bloqueado {
-  background: var(--fondo-bloqueado);
-  border: 2px dashed var(--borde-bloqueado);
-  color: var(--borde-bloqueado);
+  background: var(--bloqueado-bg, #f8f9fa);
+  border: 2px dashed var(--bloqueado-border, #aaa);
+  color: var(--bloqueado-color, #aaa);
   cursor: not-allowed;
 }
-'''
+.ramo.normal {
+  background: var(--normal-bg, white);
+  color: var(--normal-color, black);
+  border-color: var(--normal-border, #ccc);
+}
+/* Responsive: apilar semestres en pantallas pequeñas */
+@media (max-width: 768px) {
+  .contenedor-malla {
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow-x: visible;
+  }
+  .semestre {
+    min-width: 90%;
+    max-width: 400px;
+  }
+}
