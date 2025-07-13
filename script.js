@@ -1,4 +1,4 @@
-'''const malla = [
+const malla = [
   { nombre: "Semestre 1", ramos: [
     { id: "intro_datos", nombre: "Introducción al Análisis de Datos" },
     { id: "fund_bio", nombre: "Fundamentos Biológicos de la Psicología" },
@@ -74,7 +74,24 @@
 
 const aprobados = new Set(JSON.parse(localStorage.getItem("ramosAprobados")) || []);
 
+function aplicarColores() {
+  const root = document.documentElement;
+  root.style.setProperty('--aprobado-bg', document.getElementById('colorAprobadoBg').value);
+  root.style.setProperty('--aprobado-color', document.getElementById('colorAprobadoText').value);
+  root.style.setProperty('--aprobado-border', document.getElementById('colorAprobadoBorder').value);
+
+  root.style.setProperty('--bloqueado-bg', document.getElementById('colorBloqueadoBg').value);
+  root.style.setProperty('--bloqueado-color', document.getElementById('colorBloqueadoText').value);
+  root.style.setProperty('--bloqueado-border', document.getElementById('colorBloqueadoBorder').value);
+
+  root.style.setProperty('--normal-bg', document.getElementById('colorNormalBg').value);
+  root.style.setProperty('--normal-color', document.getElementById('colorNormalText').value);
+  root.style.setProperty('--normal-border', document.getElementById('colorNormalBorder').value);
+}
+
 function crearMalla() {
+  aplicarColores();
+
   const contenedor = document.getElementById("malla-container");
   contenedor.innerHTML = "";
 
@@ -89,14 +106,18 @@ function crearMalla() {
 
     semestre.ramos.forEach(ramo => {
       const boton = document.createElement("div");
-      boton.className = "ramo";
+      boton.className = "ramo normal";
       boton.textContent = ramo.nombre;
 
       if (aprobados.has(ramo.id)) {
+        boton.classList.remove("normal");
         boton.classList.add("aprobado");
       } else if (ramo.desbloqueadoSi) {
-        const requisitos = ramo.desbloqueadoSi.every(id => aprobados.has(id));
-        if (!requisitos) boton.classList.add("bloqueado");
+        const requisitosCumplidos = ramo.desbloqueadoSi.every(id => aprobados.has(id));
+        if (!requisitosCumplidos) {
+          boton.classList.remove("normal");
+          boton.classList.add("bloqueado");
+        }
       }
 
       boton.onclick = () => {
@@ -106,7 +127,7 @@ function crearMalla() {
         } else {
           aprobados.add(ramo.id);
         }
-        localStorage.setItem("ramosAprobados", JSON.stringify([...aprobados]));
+        localStorage.setItem("ramosAprobados", JSON.stringify(Array.from(aprobados)));
         crearMalla();
       };
 
@@ -117,28 +138,11 @@ function crearMalla() {
   });
 }
 
+const inputsColor = document.querySelectorAll("input[type=color]");
+inputsColor.forEach(input => {
+  input.addEventListener("input", () => {
+    aplicarColores();
+  });
+});
+
 crearMalla();
-'''
-
-# Crear carpeta temporal
-folder_path = "/mnt/data/malla_udla"
-
-os.makedirs(folder_path, exist_ok=True)
-
-# Guardar archivos
-with open(f"{folder_path}/index.html", "w", encoding="utf-8") as f:
-    f.write(index_html)
-
-with open(f"{folder_path}/estilos.css", "w", encoding="utf-8") as f:
-    f.write(estilos_css)
-
-with open(f"{folder_path}/script.js", "w", encoding="utf-8") as f:
-    f.write(script_js)
-
-# Crear zip
-zip_path = "/mnt/data/malla_udla.zip"
-with zipfile.ZipFile(zip_path, "w") as zipf:
-    zipf.write(f"{folder_path}/index.html", arcname="index.html")
-    zipf.write(f"{folder_path}/estilos.css", arcname="estilos.css")
-    zipf.write(f"{folder_path}/script.js", arcname="script.js")
-
