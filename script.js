@@ -1,10 +1,18 @@
 const malla = [
   { nombre: "Semestre 1", ramos: [
+    { id: "intro_datos", nombre: "Introducción al Análisis de Datos" },
+    { id: "fund_bio", nombre: "Fundamentos Biológicos de la Psicología" },
     { id: "intro_psico", nombre: "Introducción a la Psicología" },
-    { id: "habilidades1", nombre: "Habilidades Profesionales I" }
+    { id: "habilidades1", nombre: "Habilidades Profesionales I" },
+    { id: "fund_sociales", nombre: "Fundamentos Sociales de la Psicología" },
+    { id: "fund_epist", nombre: "Fundamentos Epistemológicos de las Ciencias Sociales" }
   ]},
   { nombre: "Semestre 2", ramos: [
-    { id: "psicopatologia", nombre: "Psicopatología" },
+    { id: "fund_cient", nombre: "Fundamentos Científicos de la Psicología" },
+    { id: "teorias_sociales", nombre: "Teorías Sociales" },
+    { id: "epistemologia", nombre: "Epistemología para Psicología" },
+    { id: "neurofisiologia", nombre: "Neurofisiología" },
+    { id: "procesos", nombre: "Procesos Psicológicos" },
     { id: "seminario1", nombre: "Seminario ADAI I" }
   ]}
 ];
