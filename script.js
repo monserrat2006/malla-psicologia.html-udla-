@@ -132,3 +132,46 @@ function reiniciar() {
 }
 
 crearMalla();
+// Función para aclarar un color (retorna color más claro)
+function lightenColor(color, luminosity) {
+  color = color.replace(/[^0-9a-f]/gi, '');
+  if(color.length < 6) {
+    color = color[0]+color[0]+color[1]+color[1]+color[2]+color[2];
+  }
+  let rgb = "#", c, i;
+  for(i=0; i<3; i++) {
+    c = parseInt(color.substr(i*2,2),16);
+    c = Math.min(255, Math.floor(c + (255 - c) * luminosity));
+    rgb += ("00"+c.toString(16)).substr(-2);
+  }
+  return rgb;
+}
+
+// Función para aplicar los colores guardados o por defecto
+function aplicarColores() {
+  const colorFondo = localStorage.getItem('colorFondo') || '#fdf9ff';
+  const colorPrincipal = localStorage.getItem('colorPrincipal') || '#6a0dad';
+
+  document.body.style.background = colorFondo;
+  document.querySelector('h1').style.color = colorPrincipal;
+  document.querySelector('h2').style.color = colorPrincipal;
+  document.querySelectorAll('.titulo-semestre').forEach(el => el.style.color = colorPrincipal);
+  document.querySelectorAll('.semestre').forEach(el => {
+    el.style.borderColor = colorPrincipal;
+    el.style.background = lightenColor(colorPrincipal, 0.9);
+  });
+}
+
+// Al cargar la página, aplicar colores guardados
+aplicarColores();
+
+// Detectar cambios en los selectores de color y guardar
+document.getElementById('color-fondo').addEventListener('input', e => {
+  localStorage.setItem('colorFondo', e.target.value);
+  aplicarColores();
+});
+document.getElementById('color-principal').addEventListener('input', e => {
+  localStorage.setItem('colorPrincipal', e.target.value);
+  aplicarColores();
+});
+
