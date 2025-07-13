@@ -1,24 +1,52 @@
-
-       <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Malla Psicología UDLA</title>
   <link rel="stylesheet" href="estilos.css" />
 </head>
 <body>
   <h1>Malla Interactiva Psicología UDLA</h1>
 
-  <div class="info-carrera">
-    <h2>Sobre la carrera de Psicología en UDLA</h2>
-    <p>
-      La carrera de Psicología en la Universidad de Las Américas (UDLA) busca formar profesionales competentes, éticos y comprometidos con la sociedad. A través de una malla curricular estructurada, el/la estudiante adquiere herramientas en distintas áreas: clínica, social, comunitaria, educacional, organizacional y más.
-    </p>
-    <p>
-      Además, se fomenta la investigación y la práctica desde etapas tempranas de la carrera. Para más información oficial, visita el sitio web de UDLA:
-      <a href="https://www.udla.cl" target="_blank">www.udla.cl</a>
-    </p>
+  <div class="color-config">
+    <!-- Aquí estarán los inputs para cambiar colores -->
+    <div>
+      <label for="colorAprobadoBg">Fondo Ramos Aprobados:</label><br />
+      <input type="color" id="colorAprobadoBg" value="#ffd6ec" />
+    </div>
+    <div>
+      <label for="colorAprobadoText">Texto Ramos Aprobados:</label><br />
+      <input type="color" id="colorAprobadoText" value="#000000" />
+    </div>
+    <div>
+      <label for="colorAprobadoBorder">Borde Ramos Aprobados:</label><br />
+      <input type="color" id="colorAprobadoBorder" value="#ff69b4" />
+    </div>
+    <div>
+      <label for="colorBloqueadoBg">Fondo Ramos Bloqueados:</label><br />
+      <input type="color" id="colorBloqueadoBg" value="#f8f9fa" />
+    </div>
+    <div>
+      <label for="colorBloqueadoText">Texto Ramos Bloqueados:</label><br />
+      <input type="color" id="colorBloqueadoText" value="#aaaaaa" />
+    </div>
+    <div>
+      <label for="colorBloqueadoBorder">Borde Ramos Bloqueados:</label><br />
+      <input type="color" id="colorBloqueadoBorder" value="#aaaaaa" />
+    </div>
+    <div>
+      <label for="colorNormalBg">Fondo Ramos Normales:</label><br />
+      <input type="color" id="colorNormalBg" value="#ffffff" />
+    </div>
+    <div>
+      <label for="colorNormalText">Texto Ramos Normales:</label><br />
+      <input type="color" id="colorNormalText" value="#000000" />
+    </div>
+    <div>
+      <label for="colorNormalBorder">Borde Ramos Normales:</label><br />
+      <input type="color" id="colorNormalBorder" value="#cccccc" />
+    </div>
   </div>
 
   <div class="contenedor-malla" id="malla-container"></div>
@@ -26,3 +54,5 @@
   <script src="script.js"></script>
 </body>
 </html>
+
+      
