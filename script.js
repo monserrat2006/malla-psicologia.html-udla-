@@ -6,6 +6,69 @@ const malla = [
     { id: "habilidades1", nombre: "Habilidades Profesionales I" },
     { id: "fund_sociales", nombre: "Fundamentos Sociales de la Psicología" },
     { id: "fund_epist", nombre: "Fundamentos Epistemológicos de las Ciencias Sociales" }
+  ]},
+  { nombre: "Semestre 2", ramos: [
+    { id: "fund_cient", nombre: "Fundamentos Científicos de la Psicología" },
+    { id: "teorias_sociales", nombre: "Teorías Sociales" },
+    { id: "epistemologia", nombre: "Epistemología para Psicología" },
+    { id: "neurofisiologia", nombre: "Neurofisiología" },
+    { id: "procesos", nombre: "Procesos Psicológicos" },
+    { id: "seminario1", nombre: "Seminario ADAI I" }
+  ]},
+  { nombre: "Semestre 3", ramos: [
+    { id: "desarrollo1", nombre: "Psicología del Desarrollo I" },
+    { id: "psicofisiologia", nombre: "Psicofisiología" },
+    { id: "psico_social", nombre: "Psicología Social" },
+    { id: "habilidades2", nombre: "Habilidades Profesionales II", desbloqueadoSi: ["habilidades1"] },
+    { id: "met_inv1", nombre: "Metodología de la Investigación Social I" },
+    { id: "identidad", nombre: "Identidad y Personalidad" }
+  ]},
+  { nombre: "Semestre 4", ramos: [
+    { id: "evaluacion1", nombre: "Evaluación Psicológica I" },
+    { id: "desarrollo2", nombre: "Psicología del Desarrollo II", desbloqueadoSi: ["desarrollo1"] },
+    { id: "psicopatologia", nombre: "Psicopatología" },
+    { id: "teorias1", nombre: "Teorías Psicológicas I" },
+    { id: "met_inv2", nombre: "Metodología de la Investigación Social II" },
+    { id: "seminario2", nombre: "Seminario ADAI II", desbloqueadoSi: ["seminario1"] }
+  ]},
+  { nombre: "Semestre 5", ramos: [
+    { id: "politicas", nombre: "Políticas Públicas" },
+    { id: "comunitaria", nombre: "Psicología Comunitaria" },
+    { id: "psiquiatria", nombre: "Psiquiatría" },
+    { id: "evaluacion2", nombre: "Evaluación Psicológica II", desbloqueadoSi: ["evaluacion1"] },
+    { id: "teorias2", nombre: "Teorías Psicológicas II", desbloqueadoSi: ["teorias1"] },
+    { id: "emergentes", nombre: "Áreas Emergentes de la Psicología" }
+  ]},
+  { nombre: "Semestre 6", ramos: [
+    { id: "evaluacion3", nombre: "Evaluación Psicológica III", desbloqueadoSi: ["evaluacion2"] },
+    { id: "taller_invest", nombre: "Taller Integrado de Investigación Social" },
+    { id: "psicoterapias1", nombre: "Psicoterapias I" },
+    { id: "clinica1", nombre: "Clínica Infanto-Juvenil I" },
+    { id: "comunicacion", nombre: "Psicología de la Comunicación" },
+    { id: "seminario3", nombre: "Seminario ADAI III", desbloqueadoSi: ["seminario2"] }
+  ]},
+  { nombre: "Semestre 7", ramos: [
+    { id: "evaluacion4", nombre: "Evaluación Psicológica IV", desbloqueadoSi: ["evaluacion3"] },
+    { id: "proy_soc1", nombre: "Proyectos Sociales I" },
+    { id: "educacional1", nombre: "Psicología Educacional I" },
+    { id: "psicoterapias2", nombre: "Psicoterapias II", desbloqueadoSi: ["psicoterapias1"] },
+    { id: "clinica2", nombre: "Clínica Infanto-Juvenil II", desbloqueadoSi: ["clinica1"] },
+    { id: "trabajo", nombre: "Psicología del Trabajo" }
+  ]},
+  { nombre: "Semestre 8", ramos: [
+    { id: "organizacional", nombre: "Psicología Organizacional" },
+    { id: "proy_soc2", nombre: "Proyectos Sociales II", desbloqueadoSi: ["proy_soc1"] },
+    { id: "educacional2", nombre: "Psicología Educacional II", desbloqueadoSi: ["educacional1"] },
+    { id: "seminario1grado", nombre: "Seminario de Grado I" },
+    { id: "seminario4", nombre: "Seminario ADAI IV", desbloqueadoSi: ["seminario3"] }
+  ]},
+  { nombre: "Semestre 9", ramos: [
+    { id: "seminario2grado", nombre: "Seminario de Grado II", desbloqueadoSi: ["seminario1grado"] },
+    { id: "practica1", nombre: "Práctica Profesional I" }
+  ]},
+  { nombre: "Semestre 10", ramos: [
+    { id: "seminario_titulo", nombre: "Seminario de Título" },
+    { id: "practica2", nombre: "Práctica Profesional II", desbloqueadoSi: ["practica1"] }
   ]}
 ];
 
@@ -31,9 +94,13 @@ function crearMalla() {
 
       if (aprobados.has(ramo.id)) {
         boton.classList.add("aprobado");
+      } else if (ramo.desbloqueadoSi) {
+        const requisitos = ramo.desbloqueadoSi.every(id => aprobados.has(id));
+        if (!requisitos) boton.classList.add("bloqueado");
       }
 
       boton.onclick = () => {
+        if (boton.classList.contains("bloqueado")) return;
         if (boton.classList.contains("aprobado")) {
           aprobados.delete(ramo.id);
         } else {
@@ -50,12 +117,4 @@ function crearMalla() {
   });
 }
 
-document.getElementById("form-colores").onsubmit = (e) => {
-  e.preventDefault();
-  document.documentElement.style.setProperty("--fondo", document.getElementById("color-fondo").value);
-  document.documentElement.style.setProperty("--texto", document.getElementById("color-texto").value);
-  document.documentElement.style.setProperty("--ramos", document.getElementById("color-ramos").value);
-};
-
 crearMalla();
-
